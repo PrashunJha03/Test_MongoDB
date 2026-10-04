@@ -1,7 +1,9 @@
 - use Testdb
 switched to db Testdb
+
 - db.createCollection("students")
 { ok: 1 }
+
 - db.students.insertMany([
     {id: 101, name: "Rahul", age: 22, gender: "M", course: "CDAC", marks: 78},
     {id: 102, name: "Priya", age: 21, gender: "F", course: "CDAC", marks: 85},
@@ -9,6 +11,7 @@ switched to db Testdb
     {id: 104, name: "Sneha", age: 22, gender: "F", course: "DAC", marks: 91},
     {id: 105, name: "Rohit", age: 24, gender: "M", course: "DBDA", marks: 72}
 ])
+
 {
   acknowledged: true,
   insertedIds: {
