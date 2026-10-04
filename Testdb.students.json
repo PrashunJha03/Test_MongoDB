@@ -1,0 +1,952 @@
+- use Testdb
+switched to db Testdb
+- db.createCollection("students")
+{ ok: 1 }
+- db.students.insertMany([
+    {id: 101, name: "Rahul", age: 22, gender: "M", course: "CDAC", marks: 78},
+    {id: 102, name: "Priya", age: 21, gender: "F", course: "CDAC", marks: 85},
+    {id: 103, name: "Amit", age: 23, gender: "M", course: "DBDA", marks: 65},
+    {id: 104, name: "Sneha", age: 22, gender: "F", course: "DAC", marks: 91},
+    {id: 105, name: "Rohit", age: 24, gender: "M", course: "DBDA", marks: 72}
+])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6ac28461341535a2c13e9892'),
+    '1': ObjectId('6ac28461341535a2c13e9893'),
+    '2': ObjectId('6ac28461341535a2c13e9894'),
+    '3': ObjectId('6ac28461341535a2c13e9895'),
+    '4': ObjectId('6ac28461341535a2c13e9896')
+  }
+}
+
+
+
+Q1. Display all students.
+
+- db.students.find().pretty()
+
+{
+  _id: ObjectId('6ac28461341535a2c13e9892'),
+  id: 101,
+  name: 'Rahul',
+  age: 22,
+  gender: 'M',
+  course: 'CDAC',
+  marks: 78
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9893'),
+  id: 102,
+  name: 'Priya',
+  age: 21,
+  gender: 'F',
+  course: 'CDAC',
+  marks: 85
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9894'),
+  id: 103,
+  name: 'Amit',
+  age: 23,
+  gender: 'M',
+  course: 'DBDA',
+  marks: 65
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9895'),
+  id: 104,
+  name: 'Sneha',
+  age: 22,
+  gender: 'F',
+  course: 'DAC',
+  marks: 91
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9896'),
+  id: 105,
+  name: 'Rohit',
+  age: 24,
+  gender: 'M',
+  course: 'DBDA',
+  marks: 72
+}
+
+
+
+Q2. Display only the name and marks of all students.
+
+- db.students.find({},{name : 1, marks : 1, _id : 0})
+{
+  name: 'Rahul',
+  marks: 78
+}
+{
+  name: 'Priya',
+  marks: 85
+}
+{
+  name: 'Amit',
+  marks: 65
+}
+{
+  name: 'Sneha',
+  marks: 91
+}
+{
+  name: 'Rohit',
+  marks: 72
+}
+
+
+
+Q3. Find the student whose id is 103.
+
+- db.students.find({id : 103})
+
+{
+  _id: ObjectId('6ac28461341535a2c13e9894'),
+  id: 103,
+  name: 'Amit',
+  age: 23,
+  gender: 'M',
+  course: 'DBDA',
+  marks: 65
+}
+
+
+
+Q4. Find all students whose age is 22.
+
+- db.students.find({age : 22})
+
+{
+  _id: ObjectId('6ac28461341535a2c13e9892'),
+  id: 101,
+  name: 'Rahul',
+  age: 22,
+  gender: 'M',
+  course: 'CDAC',
+  marks: 78
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9895'),
+  id: 104,
+  name: 'Sneha',
+  age: 22,
+  gender: 'F',
+  course: 'DAC',
+  marks: 91
+}
+
+
+
+Q5. Find all female students.
+
+- db.students.find({gender : 'F'})
+
+{
+  _id: ObjectId('6ac28461341535a2c13e9893'),
+  id: 102,
+  name: 'Priya',
+  age: 21,
+  gender: 'F',
+  course: 'CDAC',
+  marks: 85
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9895'),
+  id: 104,
+  name: 'Sneha',
+  age: 22,
+  gender: 'F',
+  course: 'DAC',
+  marks: 91
+}
+
+
+
+Q6. Find students whose marks are greater than 75.
+
+- db.students.find({marks : { $gt : 75}})
+
+{
+  _id: ObjectId('6ac28461341535a2c13e9892'),
+  id: 101,
+  name: 'Rahul',
+  age: 22,
+  gender: 'M',
+  course: 'CDAC',
+  marks: 78
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9893'),
+  id: 102,
+  name: 'Priya',
+  age: 21,
+  gender: 'F',
+  course: 'CDAC',
+  marks: 85
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9895'),
+  id: 104,
+  name: 'Sneha',
+  age: 22,
+  gender: 'F',
+  course: 'DAC',
+  marks: 91
+}
+
+
+
+Q7. Find students whose marks are less than or equal to 70.
+
+- db.students.find({marks : { $lte : 75}})
+
+{
+  _id: ObjectId('6ac28461341535a2c13e9894'),
+  id: 103,
+  name: 'Amit',
+  age: 23,
+  gender: 'M',
+  course: 'DBDA',
+  marks: 65
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9896'),
+  id: 105,
+  name: 'Rohit',
+  age: 24,
+  gender: 'M',
+  course: 'DBDA',
+  marks: 72
+}
+
+
+
+Q8. Find students belonging to the CDAC course.
+
+- db.students.find({course : 'CDAC'})
+
+{
+  _id: ObjectId('6ac28461341535a2c13e9892'),
+  id: 101,
+  name: 'Rahul',
+  age: 22,
+  gender: 'M',
+  course: 'CDAC',
+  marks: 78
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9893'),
+  id: 102,
+  name: 'Priya',
+  age: 21,
+  gender: 'F',
+  course: 'CDAC',
+  marks: 85
+}
+
+
+
+Q9. Sort students according to marks in ascending order.
+
+- db.students.find().sort({marks : 1})
+
+{
+  _id: ObjectId('6ac28461341535a2c13e9894'),
+  id: 103,
+  name: 'Amit',
+  age: 23,
+  gender: 'M',
+  course: 'DBDA',
+  marks: 65
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9896'),
+  id: 105,
+  name: 'Rohit',
+  age: 24,
+  gender: 'M',
+  course: 'DBDA',
+  marks: 72
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9892'),
+  id: 101,
+  name: 'Rahul',
+  age: 22,
+  gender: 'M',
+  course: 'CDAC',
+  marks: 78
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9893'),
+  id: 102,
+  name: 'Priya',
+  age: 21,
+  gender: 'F',
+  course: 'CDAC',
+  marks: 85
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9895'),
+  id: 104,
+  name: 'Sneha',
+  age: 22,
+  gender: 'F',
+  course: 'DAC',
+  marks: 91
+}
+
+
+
+Q10. Sort students according to marks in descending order.
+
+- db.students.find().sort({marks : -1})
+
+{
+  _id: ObjectId('6ac28461341535a2c13e9895'),
+  id: 104,
+  name: 'Sneha',
+  age: 22,
+  gender: 'F',
+  course: 'DAC',
+  marks: 91
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9893'),
+  id: 102,
+  name: 'Priya',
+  age: 21,
+  gender: 'F',
+  course: 'CDAC',
+  marks: 85
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9892'),
+  id: 101,
+  name: 'Rahul',
+  age: 22,
+  gender: 'M',
+  course: 'CDAC',
+  marks: 78
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9896'),
+  id: 105,
+  name: 'Rohit',
+  age: 24,
+  gender: 'M',
+  course: 'DBDA',
+  marks: 72
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9894'),
+  id: 103,
+  name: 'Amit',
+  age: 23,
+  gender: 'M',
+  course: 'DBDA',
+  marks: 65
+}
+
+
+
+Q11. Find students whose marks are between 70 and 85.
+
+- db.students.find({marks : { $gt : 70, $lt : 85}})
+
+{
+  _id: ObjectId('6ac28461341535a2c13e9892'),
+  id: 101,
+  name: 'Rahul',
+  age: 22,
+  gender: 'M',
+  course: 'CDAC',
+  marks: 78
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9896'),
+  id: 105,
+  name: 'Rohit',
+  age: 24,
+  gender: 'M',
+  course: 'DBDA',
+  marks: 72
+}
+
+
+
+Q12. Find students whose age is greater than 21 and marks are greater than 70.
+
+- db.students.find({age : {$gt : 21}, marks : { $gt : 70}})
+
+{
+  _id: ObjectId('6ac28461341535a2c13e9892'),
+  id: 101,
+  name: 'Rahul',
+  age: 22,
+  gender: 'M',
+  course: 'CDAC',
+  marks: 78
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9895'),
+  id: 104,
+  name: 'Sneha',
+  age: 22,
+  gender: 'F',
+  course: 'DAC',
+  marks: 91
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9896'),
+  id: 105,
+  name: 'Rohit',
+  age: 24,
+  gender: 'M',
+  course: 'DBDA',
+  marks: 72
+}
+
+
+
+Q13. Find students who are either from CDAC or DBDA.
+
+- db.students.find({course :{$in : ['CDAC' , 'DBDA']}})
+
+{
+  _id: ObjectId('6ac28461341535a2c13e9892'),
+  id: 101,
+  name: 'Rahul',
+  age: 22,
+  gender: 'M',
+  course: 'CDAC',
+  marks: 78
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9893'),
+  id: 102,
+  name: 'Priya',
+  age: 21,
+  gender: 'F',
+  course: 'CDAC',
+  marks: 85
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9894'),
+  id: 103,
+  name: 'Amit',
+  age: 23,
+  gender: 'M',
+  course: 'DBDA',
+  marks: 65
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9896'),
+  id: 105,
+  name: 'Rohit',
+  age: 24,
+  gender: 'M',
+  course: 'DBDA',
+  marks: 72
+}
+
+
+
+Q14. Find students who are not from CDAC.
+
+- db.students.find({course :{$ne: 'CDAC'}})
+
+{
+  _id: ObjectId('6ac28461341535a2c13e9894'),
+  id: 103,
+  name: 'Amit',
+  age: 23,
+  gender: 'M',
+  course: 'DBDA',
+  marks: 65
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9895'),
+  id: 104,
+  name: 'Sneha',
+  age: 22,
+  gender: 'F',
+  course: 'DAC',
+  marks: 91
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9896'),
+  id: 105,
+  name: 'Rohit',
+  age: 24,
+  gender: 'M',
+  course: 'DBDA',
+  marks: 72
+}
+
+
+
+Q15. Count the total number of students.
+
+- db.students.countDocuments()
+
+5
+
+
+
+Q16. Count the number of female students.
+
+- db.students.countDocuments({gender : 'F'})
+
+2
+
+
+
+Q17. Find the student with the highest marks.
+
+- db.students.find().sort({marks : -1}).limit(1)
+
+{
+  _id: ObjectId('6ac28461341535a2c13e9895'),
+  id: 104,
+  name: 'Sneha',
+  age: 22,
+  gender: 'F',
+  course: 'DAC',
+  marks: 91
+}
+
+
+
+Q18. Find the student with the lowest marks.
+
+- db.students.find().sort({marks : 1}).limit(1)
+
+{
+  _id: ObjectId('6ac28461341535a2c13e9894'),
+  id: 103,
+  name: 'Amit',
+  age: 23,
+  gender: 'M',
+  course: 'DBDA',
+  marks: 65
+}
+
+
+
+Q19. Display only the first 3 students.
+
+- db.students.find().sort().limit(3)
+
+{
+  _id: ObjectId('6ac28461341535a2c13e9892'),
+  id: 101,
+  name: 'Rahul',
+  age: 22,
+  gender: 'M',
+  course: 'CDAC',
+  marks: 78
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9893'),
+  id: 102,
+  name: 'Priya',
+  age: 21,
+  gender: 'F',
+  course: 'CDAC',
+  marks: 85
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9894'),
+  id: 103,
+  name: 'Amit',
+  age: 23,
+  gender: 'M',
+  course: 'DBDA',
+  marks: 65
+}
+
+
+Q20. Update Rahul's marks to 82.
+
+- db.students.updateOne({name : 'Rahul'},{$set : {marks : 82}})
+
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+
+
+Q21. Increase Amit's marks by 5.
+
+- db.students.updateOne({name : 'Amit'},{$inc : {marks : 5}})
+
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+
+
+- db.students.find().pretty()
+{
+  _id: ObjectId('6ac28461341535a2c13e9892'),
+  id: 101,
+  name: 'Rahul',
+  age: 22,
+  gender: 'M',
+  course: 'CDAC',
+  marks: 82
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9893'),
+  id: 102,
+  name: 'Priya',
+  age: 21,
+  gender: 'F',
+  course: 'CDAC',
+  marks: 85
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9894'),
+  id: 103,
+  name: 'Amit',
+  age: 23,
+  gender: 'M',
+  course: 'DBDA',
+  marks: 70
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9895'),
+  id: 104,
+  name: 'Sneha',
+  age: 22,
+  gender: 'F',
+  course: 'DAC',
+  marks: 91
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9896'),
+  id: 105,
+  name: 'Rohit',
+  age: 24,
+  gender: 'M',
+  course: 'DBDA',
+  marks: 72
+}
+
+
+
+Q22. Change Sneha's course from DAC to CDAC.
+
+- db.students.updateOne({name : 'Sneha'},{$set : {course : 'CDAC'}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+- db.students.find().pretty()
+{
+  _id: ObjectId('6ac28461341535a2c13e9892'),
+  id: 101,
+  name: 'Rahul',
+  age: 22,
+  gender: 'M',
+  course: 'CDAC',
+  marks: 82
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9893'),
+  id: 102,
+  name: 'Priya',
+  age: 21,
+  gender: 'F',
+  course: 'CDAC',
+  marks: 85
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9894'),
+  id: 103,
+  name: 'Amit',
+  age: 23,
+  gender: 'M',
+  course: 'DBDA',
+  marks: 70
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9895'),
+  id: 104,
+  name: 'Sneha',
+  age: 22,
+  gender: 'F',
+  course: 'CDAC',
+  marks: 91
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9896'),
+  id: 105,
+  name: 'Rohit',
+  age: 24,
+  gender: 'M',
+  course: 'DBDA',
+  marks: 72
+}
+
+
+
+Q23. Add a new field city: "Bangalore" to all students.
+
+- db.students.updateMany({},{$set : {city : "Bangalore"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 5,
+  modifiedCount: 5,
+  upsertedCount: 0
+}
+
+-db.students.find().pretty()
+{
+  _id: ObjectId('6ac28461341535a2c13e9892'),
+  id: 101,
+  name: 'Rahul',
+  age: 22,
+  gender: 'M',
+  course: 'CDAC',
+  marks: 82,
+  city: 'Bangalore'
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9893'),
+  id: 102,
+  name: 'Priya',
+  age: 21,
+  gender: 'F',
+  course: 'CDAC',
+  marks: 85,
+  city: 'Bangalore'
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9894'),
+  id: 103,
+  name: 'Amit',
+  age: 23,
+  gender: 'M',
+  course: 'DBDA',
+  marks: 70,
+  city: 'Bangalore'
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9895'),
+  id: 104,
+  name: 'Sneha',
+  age: 22,
+  gender: 'F',
+  course: 'CDAC',
+  marks: 91,
+  city: 'Bangalore'
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9896'),
+  id: 105,
+  name: 'Rohit',
+  age: 24,
+  gender: 'M',
+  course: 'DBDA',
+  marks: 72,
+  city: 'Bangalore'
+}
+
+
+
+Q24. Delete the student whose id is 105.
+
+- db.students.deleteOne({id : 105})
+
+{
+  acknowledged: true,
+  deletedCount: 1
+}
+
+
+
+Q25. Delete all students whose marks are below 70.
+
+- db.students.deleteMany({marks : {$lt : 70}})
+
+{
+  acknowledged: true,
+  deletedCount: 0
+}
+
+
+
+Q26. Find the second-highest marks.
+
+- db.students.find().sort({marks : -1}).skip(1).limit(1)
+
+{
+  _id: ObjectId('6ac28461341535a2c13e9893'),
+  id: 102,
+  name: 'Priya',
+  age: 21,
+  gender: 'F',
+  course: 'CDAC',
+  marks: 85,
+  city: 'Bangalore'
+}
+
+
+
+
+Q27. Find the average marks of all students.
+
+- db.students.aggregate([{ $group : { _id : null, averagemarks: {$avg : "$marks"}}}])
+
+{
+  _id: null,
+  averagemarks: 82
+}
+
+
+
+Q28. Find the maximum marks of students in each course.
+
+- db.students.aggregate([{ $group : { _id : "$course", maxMarks: {$max : "$marks"}}}])
+{
+  _id: 'CDAC',
+  maxMarks: 91
+}
+{
+  _id: 'DBDA',
+  maxMarks: 70
+}
+
+
+Q29. Count students in each course.
+
+- db.students.aggregate([{ $group : { _id : "$course", totStudents: {$sum : 1}}}])
+
+{
+  _id: 'DBDA',
+  totStudents: 1
+}
+{
+  _id: 'CDAC',
+  totStudents: 3
+}
+
+
+
+Q32. Find female students having marks greater than 80.
+
+- db.students.find({gender : 'F', marks : {$gt : 80}})
+
+{
+  _id: ObjectId('6ac28461341535a2c13e9893'),
+  id: 102,
+  name: 'Priya',
+  age: 21,
+  gender: 'F',
+  course: 'CDAC',
+  marks: 85,
+  city: 'Bangalore'
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9895'),
+  id: 104,
+  name: 'Sneha',
+  age: 22,
+  gender: 'F',
+  course: 'CDAC',
+  marks: 91,
+  city: 'Bangalore'
+}
+
+
+
+Q33. Find students whose name starts with "R".
+
+- db.students.find({name : /^R/})
+
+{
+  _id: ObjectId('6ac28461341535a2c13e9892'),
+  id: 101,
+  name: 'Rahul',
+  age: 22,
+  gender: 'M',
+  course: 'CDAC',
+  marks: 82,
+  city: 'Bangalore'
+}
+
+
+
+Q34. Find students whose name ends with "a".
+
+- db.students.find({name : /a$/})
+
+{
+  _id: ObjectId('6ac28461341535a2c13e9893'),
+  id: 102,
+  name: 'Priya',
+  age: 21,
+  gender: 'F',
+  course: 'CDAC',
+  marks: 85,
+  city: 'Bangalore'
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9895'),
+  id: 104,
+  name: 'Sneha',
+  age: 22,
+  gender: 'F',
+  course: 'CDAC',
+  marks: 91,
+  city: 'Bangalore'
+}
+
+
+
+Q35. Display students in descending order of marks and show only the top 2.
+
+- db.students.find().sort({marks : -1}).limit(2)
+
+{
+  _id: ObjectId('6ac28461341535a2c13e9895'),
+  id: 104,
+  name: 'Sneha',
+  age: 22,
+  gender: 'F',
+  course: 'CDAC',
+  marks: 91,
+  city: 'Bangalore'
+}
+{
+  _id: ObjectId('6ac28461341535a2c13e9893'),
+  id: 102,
+  name: 'Priya',
+  age: 21,
+  gender: 'F',
+  course: 'CDAC',
+  marks: 85,
+  city: 'Bangalore'
+}
+
+
+
