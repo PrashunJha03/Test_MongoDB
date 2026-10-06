@@ -1,7 +1,6 @@
 - use Testdb
 switched to db Testdb
 
-
 - db.createCollection("students")
 { ok: 1 }
 
