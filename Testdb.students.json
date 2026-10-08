@@ -357,7 +357,6 @@ Q10. Sort students according to marks in descending order.
 }
 
 
-
 Q11. Find students whose marks are between 70 and 85.
 
 - db.students.find({marks : { $gt : 70, $lt : 85}})
