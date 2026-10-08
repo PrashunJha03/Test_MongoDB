@@ -25,7 +25,7 @@ switched to db Testdb
 
 
 
-Q1. Display all students.
+Q1. Display all students. 
 
 - db.students.find().pretty()
 
