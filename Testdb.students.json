@@ -12,7 +12,7 @@ switched to db Testdb
     {id: 105, name: "Rohit", age: 24, gender: "M", course: "DBDA", marks: 72}
 ])
 
-{
+{ 
   acknowledged: true,
   insertedIds: {
     '0': ObjectId('6ac28461341535a2c13e9892'),
