@@ -901,7 +901,7 @@ Q33. Find students whose name starts with "R".
 
 Q34. Find students whose name ends with "a".
 
-- db.students.find({name : /a$/})
+- db.students.find({name : /a$/}) 
 
 {
   _id: ObjectId('6ac28461341535a2c13e9893'),
